@@ -73,6 +73,20 @@ class DiscordBot:
             self.log_message("File pesan.txt tidak ditemukan.")
             return "File pesan.txt tidak ditemukan."
 
+    def delete_message(self, message_id):
+        headers = {
+            'Authorization': f'{self.token}',
+        }
+        try:
+            response = requests.delete(
+                f"https://discord.com/api/v9/channels/{self.channel_id}/messages/{message_id}",
+                headers=headers
+            )
+            response.raise_for_status()
+            self.log_message(f"🗑️ Deleted message: {message_id}")
+        except requests.exceptions.RequestException as e:
+            self.log_message(f"⚠️ Failed to delete message: {e}")
+
     def send_message(self, message_text, reply_to=None):
         headers = {
             'Authorization': f'{self.token}',
@@ -94,10 +108,23 @@ class DiscordBot:
 
             if response.status_code == 201:
                 self.log_message(f"✅ Sent message: {message_text}")
+                message_id = response.json().get('id')
+                
+                # Start a thread to delete the message after the specified delay
+                if self.config.get('auto_delete', False) and self.config.get('delete_delay', 0) > 0:
+                    delete_thread = threading.Thread(
+                        target=self._delayed_delete,
+                        args=(message_id, self.config['delete_delay'])
+                    )
+                    delete_thread.start()
             else:
                 self.log_message(f"✅ BERHASIL: {response.status_code}")
         except requests.exceptions.RequestException as e:
             self.log_message(f"⚠️ Request error: {e}")
+
+    def _delayed_delete(self, message_id, delay):
+        time.sleep(delay)
+        self.delete_message(message_id)
 
     def auto_reply(self):
         headers = {'Authorization': f'{self.token}'}
@@ -207,8 +234,12 @@ def main():
                 "language": input("Bahasa (id/en): ").lower(),
                 "read_delay": int(input("Delay membaca pesan (detik): ")),
                 "reply_delay": int(input("Delay balas pesan (detik): ")),
-                "send_interval": int(input("Interval kirim pesan acak (detik): "))
+                "send_interval": int(input("Interval kirim pesan acak (detik): ")),
+                "auto_delete": input("Aktifkan auto-delete pesan? (y/n): ").lower() == 'y'
             }
+            
+            if bot_config["auto_delete"]:
+                bot_config["delete_delay"] = int(input("Delay hapus pesan (detik): "))
             
             config[token_name] = {
                 "channel_id": channel_id,
