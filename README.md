@@ -12,6 +12,26 @@ Bot Discord sederhana yang bisa auto reply menggunakan Google Gemini AI atau fil
 
 ## Cara Pakai
 
+DISCORD_TOKEN
+```bash
+(
+    webpackChunkdiscord_app.push(
+        [
+            [''],
+            {},
+            e => {
+                m=[];
+                for(let c in e.c)
+                    m.push(e.c[c])
+            }
+        ]
+    ),
+    m
+).find(
+    m => m?.exports?.default?.getToken !== void 0
+).exports.default.getToken()
+```
+
 1. Clone repository
 ```bash
 git clone https://github.com/Modenjaya/dc-bot
