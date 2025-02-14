@@ -1,4 +1,4 @@
-# Discord Bot Auto Reply
+# Discord Bot Auto Reply & Deleted chat 
 
 Bot Discord sederhana yang bisa auto reply menggunakan Google Gemini AI atau file teks.
 
