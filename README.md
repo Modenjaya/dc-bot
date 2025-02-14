@@ -43,6 +43,7 @@ cd dc-bot
 2. Install dependencies
 ```bash
 pip install python-dotenv requests
+sudo apt install python3-venv -y
 ```
 
 3. Ubah file `.env`
@@ -53,16 +54,14 @@ DISCORD_TOKEN_3=
 GOOGLE_API_KEY=your_google_api_key
 ```
 
-4. Buat file `pesan.txt` (opsional, untuk mode reply dari file)
+4. Isi pesanmu `pesan.txt` (opsional, untuk mode reply dari file)
 ```
-Pesan 1
-Pesan 2
-Pesan 3
+nano pesan.txt
 ```
 
 5. Jalankan bot
 ```bash
-python discord.py
+python3 discord.py
 ```
 
 ## Menu
