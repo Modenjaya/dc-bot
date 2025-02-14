@@ -16,13 +16,16 @@ Bot Discord sederhana yang bisa auto reply menggunakan Google Gemini AI atau fil
 ```bash
 git clone https://github.com/Modenjaya/dc-bot
 ```
+```bash
+cd dc-bot
+```
 
 2. Install dependencies
 ```bash
 pip install python-dotenv requests
 ```
 
-3. Buat file `.env`
+3. Ubah file `.env`
 ```env
 DISCORD_TOKEN_1=your_discord_token
 DISCORD_TOKEN_2=
