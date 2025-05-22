@@ -13,6 +13,7 @@ Bot Discord sederhana yang bisa auto reply menggunakan Google Gemini AI atau fil
 ## Cara Pakai
 
 DISCORD_TOKEN
+WILL SHOW ✅ YOUR TOKEN: OTgxMT..............
 ```bash
 console.log('\n🔧 FIND YOUR TOKEN');
     try {
