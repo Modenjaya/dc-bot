@@ -50,15 +50,6 @@ console.log('\n🔧 FIND YOUR TOKEN');
     } catch (e) {
         console.log('❌ Alternative webpack error:', e.message);
     }
-    
-    // Method 6: Check for React DevTools or other global objects
-    console.log('\n🔍 Checking global objects...');
-    const globalChecks = [
-        'localStorage.token',
-        'sessionStorage.token', 
-        'window.localStorage.token',
-        'document.cookie'
-    ];
 ```
 
 1. Clone repository
