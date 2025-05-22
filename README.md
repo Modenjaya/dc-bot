@@ -14,22 +14,51 @@ Bot Discord sederhana yang bisa auto reply menggunakan Google Gemini AI atau fil
 
 DISCORD_TOKEN
 ```bash
-(
-    webpackChunkdiscord_app.push(
-        [
-            [''],
-            {},
-            e => {
-                m=[];
-                for(let c in e.c)
-                    m.push(e.c[c])
+console.log('\n🔧 FIND YOUR TOKEN');
+    try {
+        for (const key in window) {
+            if (key.startsWith('webpackChunk')) {
+                console.log(`Found webpack chunk: ${key}`);
+                const chunk = window[key];
+                if (chunk && chunk.push) {
+                    try {
+                        const modules = [];
+                        chunk.push([['test'], {}, (e) => {
+                            for (const moduleId in e.c) {
+                                modules.push(e.c[moduleId]);
+                            }
+                        }]);
+                        
+                        const tokenModule = modules.find(m => 
+                            m?.exports?.default?.getToken || 
+                            m?.exports?.getToken ||
+                            (m?.exports && typeof m.exports.getToken === 'function')
+                        );
+                        
+                        if (tokenModule) {
+                            const token = tokenModule.exports.default?.getToken() || tokenModule.exports.getToken();
+                            if (token) {
+                                console.log('✅ YOUR TOKEN:', token);
+                            }
+                        }
+                    } catch (e) {
+                        console.log(`❌ Error with ${key}:`, e.message);
+                    }
+                }
             }
-        ]
-    ),
-    m
-).find(
-    m => m?.exports?.default?.getToken !== void 0
-).exports.default.getToken()
+        }
+    } catch (e) {
+        console.log('❌ Alternative webpack error:', e.message);
+    }
+    
+    // Method 6: Check for React DevTools or other global objects
+    console.log('\n🔍 Checking global objects...');
+    const globalChecks = [
+        'localStorage.token',
+        'sessionStorage.token', 
+        'window.localStorage.token',
+        'document.cookie'
+    ];
 ```
 
 1. Clone repository
